@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    var isFront = true
+    var isToFront = false
     let view0 = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
     let view1 = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
     let view2 = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
@@ -28,23 +28,21 @@ class ViewController: UIViewController {
         view0.bringSubview(toFront: view1)
     }
     
-    func flip(isFront: Bool) {
-        if isFront {
-            let transitionOptions: UIViewAnimationOptions = [.transitionFlipFromLeft]
-            UIView.transition(with: view0, duration: 1.0, options: transitionOptions, animations: {
-                self.view0.bringSubview(toFront: self.view2)
-            })
-        } else {
-            let transitionOptions: UIViewAnimationOptions = [.transitionFlipFromRight]
-            UIView.transition(with: view0, duration: 1.0, options: transitionOptions, animations: {
+    func flip(isToFront: Bool) {
+        if isToFront {
+            UIView.transition(with: view0, duration: 1.0, options: [.transitionFlipFromLeft], animations: {
                 self.view0.bringSubview(toFront: self.view1)
             })
+        } else {
+            UIView.transition(with: view0, duration: 1.0, options: [.transitionFlipFromRight], animations: {
+                self.view0.bringSubview(toFront: self.view2)
+            })
         }
-        self.isFront = !isFront
+        self.isToFront = !isToFront
     }
     
     @IBAction func tappedButton(_ sender: UIButton) {
-        flip(isFront: isFront)
+        flip(isToFront: isToFront)
     }
     
 }
